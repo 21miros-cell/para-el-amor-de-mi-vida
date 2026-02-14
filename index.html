@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>PARA EL AMOR DE MI VIDA</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI', sans-serif;
+}
+
+html, body{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    background:#000;
+}
+
+/* SECCIONES */
+.section{
+    position:absolute;
+    inset:0;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:20px;
+
+    background-size:cover;
+    background-position:center;
+
+    opacity:0;
+    transition:opacity 2.5s ease;
+    pointer-events:none;
+}
+
+.section.active{
+    opacity:1;
+    pointer-events:auto;
+}
+
+/* TEXTO */
+h1, p{
+    color:#fff;
+    text-shadow:2px 2px 8px rgba(0,0,0,0.85);
+    margin-bottom:25px;
+}
+
+h1{
+    font-size:3em;
+}
+
+p{
+    font-size:1.8em;
+    max-width:900px;
+}
+
+/* BOTONES */
+button{
+    padding:15px 40px;
+    font-size:1.2em;
+    border:none;
+    border-radius:30px;
+    cursor:pointer;
+    background:rgba(255,255,255,0.9);
+    color:#333;
+    transition:0.3s ease;
+}
+
+button:hover{
+    transform:scale(1.08);
+    background:#ffb6c1;
+}
+
+/* CARTA */
+.card{
+    background:rgba(255,255,255,0.95);
+    padding:30px;
+    border-radius:20px;
+    max-width:720px;
+    display:none;
+    animation:cardOpen 1.5s ease forwards;
+}
+
+@keyframes cardOpen{
+    from{opacity:0; transform:scale(0.7);}
+    to{opacity:1; transform:scale(1);}
+}
+
+.card p{
+    color:#333;
+    text-shadow:none;
+    font-size:1.2em;
+}
+
+/* SI / NO */
+.buttons{
+    margin-top:20px;
+    position:relative;
+    display:flex;
+    justify-content:center;
+    gap:20px;
+}
+
+#noBtn{
+    position:absolute;
+}
+
+/* VIDEO */
+video{
+    width:90%;
+    max-width:900px;
+    border-radius:20px;
+    box-shadow:0 0 25px rgba(0,0,0,0.7);
+}
+</style>
+</head>
+
+<body>
+
+<audio id="music" src="KISS ME.mp3" preload="auto"></audio>
+
+<!-- SECCIÓN 1 -->
+<div class="section active" style="background-image:url('imagen1.jpg')">
+    <h1>¿CUÁNTO TE AMO?</h1>
+    <button onclick="startExperience()">DESCUBRIR</button>
+</div>
+
+<!-- SECCIÓN 2 -->
+<div class="section" style="background-image:url('imagen2.jpg')">
+    <p>TE AMO, TE AMO DE AQUÍ A LA LUNA 🌑<br>
+    A PASITOS DE TORTUGA 🐢</p>
+</div>
+
+<!-- SECCIÓN 3 -->
+<div class="section" style="background-image:url('imagen3.jpg')">
+    <p>TE AMO AÚN MÁS, DE AHÍ AL SOL ☀️<br>
+    A PASITOS DE CARACOL 🐌</p>
+</div>
+
+<!-- SECCIÓN 4 -->
+<div class="section" style="background-image:url('imagen4.jpg')">
+    <p>Y TODAVÍA MÁS, DE REGRESO AL MAR 🌊<br>
+    A BRINQUITOS DE CALAMAR 🦑</p>
+</div>
+
+<!-- SECCIÓN 5 -->
+<div class="section" style="background-image:url('imagen5.jpg')">
+    <button onclick="openCard()">ABRIR</button>
+
+    <div class="card" id="card">
+        <p>
+        Te amo tanto que podría recorrer esas distancias las veces que fueran necesarias,
+        para que entiendas lo mucho que te amo.
+        Soy tan feliz a tu lado que intentar describirlo es imposible.
+        <br><br>
+        Quiero una vida contigo, mis mañanas contigo, mis risas contigo,
+        mis tristezas contigo… quiero todo si es contigo.
+        <br><br>
+        <strong>¿Y tú quieres?</strong>
+        </p>
+
+        <div class="buttons">
+            <button onclick="showVideo()">SI, SI ES CONTIGO 💖</button>
+            <button id="noBtn">NO</button>
+        </div>
+    </div>
+</div>
+
+<!-- VIDEO FINAL -->
+<div class="section" style="background:#000">
+    <video id="finalVideo" autoplay playsinline>
+        <source src="video.mp4" type="video/mp4">
+    </video>
+</div>
+
+<script>
+let current = 0;
+const sections = document.querySelectorAll('.section');
+const music = document.getElementById('music');
+const video = document.getElementById('finalVideo');
+const noBtn = document.getElementById('noBtn');
+
+function startExperience(){
+    // 👉 Música inicia INMEDIATAMENTE desde el segundo 5
+    music.currentTime = 5;
+    music.play();
+
+    nextSection();
+}
+
+function nextSection(){
+    sections[current].classList.remove('active');
+    current++;
+    sections[current].classList.add('active');
+
+    if(current < sections.length - 2){
+        setTimeout(nextSection, 6500);
+    }
+}
+
+function openCard(){
+    document.getElementById('card').style.display = 'block';
+}
+
+noBtn.addEventListener('mouseover', ()=>{
+    const x = Math.random()*300 - 150;
+    const y = Math.random()*150 - 75;
+    noBtn.style.transform = `translate(${x}px, ${y}px)`;
+});
+
+function showVideo(){
+    sections[current].classList.remove('active');
+    current++;
+    sections[current].classList.add('active');
+    video.play();
+}
+</script>
+
+</body>
+</html>
